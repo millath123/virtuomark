@@ -19,7 +19,9 @@ const app = express();
 
 // Security middlewares
 app.use(helmet()); // Helmet helps secure Express apps by setting various HTTP headers
-app.use(cors()); // Enable Cross-Origin Resource Sharing
+app.use(cors({
+    origin: 'https://virtuomark.vercel.app',
+  })); // Enable Cross-Origin Resource Sharing
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 })); // Rate limiting middleware to prevent abuse
 
 // Middleware to parse incoming JSON requests and handle cookies
