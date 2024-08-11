@@ -50,7 +50,7 @@ const UserProfile = () => {
     };
 
     fetchUserProfile();
-  }, [navigate]);
+  }, []);
 
   const handleLogout = () => {
     // Clear the token from cookies

@@ -73,7 +73,7 @@ const AdminProfile = () => {
 
     fetchAdminProfile();
     fetchUsers();
-  }, [navigate]);
+  }, []);
 
   const handleLogout = () => {
     // Clear the token from cookies
