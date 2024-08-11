@@ -2,73 +2,92 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth/Auth.css';
 import { ADMIN_PROFILE_API, ADMIN_USERS_API } from '../../constants'; // Import API URLs from constants
-import { getTokenFromCookies } from '../../utils/cookieUtils'; // Optional: use a utility function to get the token
 
 const AdminProfile = () => {
   const [user, setUser] = useState(null);
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchAdminData = async () => {
-      const token = getTokenFromCookies();
-      if (!token) {
-        navigate('/login');
-        return;
+  // Helper function to get the token from cookies
+  const getTokenFromCookies = () => {
+    const name = 'token=';
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
       }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return null;
+  };
 
+  useEffect(() => {
+    const fetchAdminProfile = async () => {
+      const token = getTokenFromCookies();
       try {
-        const [profileResponse, usersResponse] = await Promise.all([
-          fetch(ADMIN_PROFILE_API, {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          }),
-          fetch(ADMIN_USERS_API, {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          }),
-        ]);
+        const response = await fetch(ADMIN_PROFILE_API, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`, // Set the token in Authorization header
+            'Content-Type': 'application/json',
+          },
+        });
 
-        if (!profileResponse.ok || !usersResponse.ok) {
-          throw new Error('Failed to fetch data');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
 
-        const profileData = await profileResponse.json();
-        const usersData = await usersResponse.json();
-
-        setUser(profileData);
-        setUsers(usersData);
+        const data = await response.json();
+        setUser(data);
       } catch (error) {
-        console.error('Failed to fetch admin data', error);
-        setError('Failed to load data. Please try again later.');
+        console.error('Failed to fetch admin profile', error);
         navigate('/login');
-      } finally {
-        setLoading(false);
       }
     };
 
-    fetchAdminData();
-  }, []); // Empty array ensures this effect runs only once
+    const fetchUsers = async () => {
+      const token = getTokenFromCookies();
+      try {
+        const response = await fetch(ADMIN_USERS_API, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`, // Set the token in Authorization header
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        setUsers(data);
+      } catch (error) {
+        console.error('Failed to fetch users', error);
+      }
+    };
+
+    fetchAdminProfile();
+    fetchUsers();
+  }, []);
 
   const handleLogout = () => {
+    // Clear the token from cookies
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+    
+    // Optionally, you might want to call a logout API endpoint if you have one
+    // await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+
+    // Redirect to the login page
     navigate('/login');
   };
 
-  if (loading) {
-    return <div>Loading...</div>; // You could replace this with a spinner component
-  }
-
-  if (error) {
-    return <div>{error}</div>;
+  if (!user) {
+    return <div>Loading...</div>; // Show loading message or spinner while data is being fetched
   }
 
   return (
