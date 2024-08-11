@@ -71,7 +71,7 @@ const UserProfile = () => {
           <p><strong>Name:</strong> {user.name}</p>
         </div>
         <div className="form-group">
-          <p><strong>Role:</strong> {user.role}</p>
+          <p><strong>Role:</strong> User</p>
         </div>
         <button className="btn" onClick={handleLogout}>
           Logout
