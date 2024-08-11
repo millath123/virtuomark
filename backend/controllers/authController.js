@@ -21,7 +21,7 @@ export const loginUser = async (req, res) => {
     let pas = process.env.ADMIN_PASSWORD
     if (password == pas) {
       // Generate token with admin role and send it as a cookie
-      let tokk =  generateToken('admin', 'admin')
+      let tokk =  generateToken('adminid', 'admin')
       res.cookie('token',tokk);
       return res.json({
         name: 'Admin',
