@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth/Auth.css';
-import { ADMIN_PROFILE_API, ADMIN_USERS_API } from '../../constants'; // Import API URLs from constants
+import { ADMIN_PROFILE_API, ADMIN_USERS_API } from '../../constants';
 
 const AdminProfile = () => {
   const [user, setUser] = useState(null);
@@ -28,42 +28,55 @@ const AdminProfile = () => {
   useEffect(() => {
     const fetchAdminProfile = async () => {
       const token = getTokenFromCookies();
+      if (!token) {
+        navigate('/login'); // Redirect to login if token is missing
+        return;
+      }
       try {
         const response = await fetch(ADMIN_PROFILE_API, {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`, // Set the token in Authorization header
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
-          mode: 'no-cors',
         });
 
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          if (response.status === 401) {
+            handleLogout(); // If unauthorized, log out and redirect to login
+          } else {
+            throw new Error('Network response was not ok');
+          }
         }
 
         const data = await response.json();
         setUser(data);
       } catch (error) {
         console.error('Failed to fetch admin profile', error);
-        navigate('/login');
       }
     };
 
     const fetchUsers = async () => {
       const token = getTokenFromCookies();
+      if (!token) {
+        navigate('/login');
+        return;
+      }
       try {
         const response = await fetch(ADMIN_USERS_API, {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`, // Set the token in Authorization header
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
-          mode: 'no-cors',
         });
 
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          if (response.status === 401) {
+            handleLogout();
+          } else {
+            throw new Error('Network response was not ok');
+          }
         }
 
         const data = await response.json();
@@ -80,11 +93,6 @@ const AdminProfile = () => {
   const handleLogout = () => {
     // Clear the token from cookies
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-    
-    // Optionally, you might want to call a logout API endpoint if you have one
-    // await fetch('/api/logout', { method: 'POST', credentials: 'include' });
-
-    // Redirect to the login page
     navigate('/login');
   };
 

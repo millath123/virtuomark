@@ -17,12 +17,20 @@ connectDB();
 
 const app = express();
 
-// Security middlewares
-app.use(helmet()); // Helmet helps secure Express apps by setting various HTTP headers
+
 app.use(cors({
     origin: 'https://virtuomark.vercel.app',
     credentials: true, // Allow credentials
   })); // Enable Cross-Origin Resource Sharing
+
+  // Example in Express.js
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://virtuomark.vercel.app'); // Allow the specific frontend origin
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  next();
+});
+
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 })); // Rate limiting middleware to prevent abuse
 
 // Middleware to parse incoming JSON requests and handle cookies
