@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 export const getDashboard = (req, res) => {
   res.json({
     user: req.user,
+    roll:req.roll,
     message: 'Welcome to the dashboard!',
   });
 };

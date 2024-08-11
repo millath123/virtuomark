@@ -21,6 +21,7 @@ export const protect = async (req, res, next) => {
 
       // Add role from JWT to the request object
       req.user.role = decoded.role;
+      req.role = decoded.role;
 
       next(); // Proceed to the next middleware
     } catch (error) {
@@ -34,7 +35,7 @@ export const protect = async (req, res, next) => {
 
 // Middleware to restrict access to admin-only routes
 export const admin = (req, res, next) => {
-  if (req.user && req.user.role === 'admin') {
+  if (req.user && req.role === 'admin') {
     next(); // Proceed if user is admin
   } else {
     res.status(403).json({ message: 'Admin access only' });
