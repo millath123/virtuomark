@@ -10,6 +10,16 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  const setCookie = (name, value, days) => {
+    let expires = '';
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = `expires=${date.toUTCString()};`;
+    }
+    document.cookie = `${name}=${value}; ${expires}path=/`;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -26,6 +36,9 @@ const Login = () => {
       }
 
       const data = await response.json();
+      // Set token in a cookie manually
+      setCookie('token', data.token, 7); // Set cookie to expire in 7 days
+
       if (data.role === 'admin') {
         navigate('/admin-dashboard');
       } else {

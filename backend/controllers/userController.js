@@ -31,6 +31,7 @@ export const loginUser = async (req, res) => {
         name: 'Admin',
         email: email,
         role: 'admin',
+        token: tokk
       });
     } else {
       return res.status(401).json({ message: 'Invalid admin credentials' });
@@ -49,6 +50,7 @@ export const loginUser = async (req, res) => {
       name: user.name,
       email: user.email,
       role: 'user',
+      token: tok
     });
   } else {
     res.status(401).json({ message: 'Invalid email or password' });
