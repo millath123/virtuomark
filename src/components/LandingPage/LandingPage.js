@@ -6,8 +6,8 @@ const LandingPage = () => {
   return (
     <div className="landing-page">
       <header className="header">
-        <h1>Welcome to MyApp</h1>
-        <p>Your one-stop solution for managing tasks and roles.</p>
+        <h1>Welcome to VirtuoMark</h1>
+        <p>Unlock your potential with expert-led digital marketing courses. Shape your future, one click at a time.</p>
       </header>
       <div className="cta-buttons">
         <Link to="/signup" className="btn btn-primary">Sign Up</Link>
