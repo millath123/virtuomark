@@ -4,9 +4,18 @@ import bcrypt from 'bcryptjs';
 
 export const getDashboard = (req, res) => {
   res.json({
+    user: req.user,
     message: 'Welcome to the dashboard!',
   });
 };
+
+export const getUsers = async (req, res) => {
+  const users = await User.find(); 
+  res.json({
+    users
+  });
+};
+
 // Controller for logging in a user or admin
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;

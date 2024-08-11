@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Auth.css';
-import { SIGNUP_URL } from '../../constants';
+import { REGISTER_URL } from '../../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 
@@ -13,7 +13,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(SIGNUP_URL, { name, email, password });
+      await axios.post(REGISTER_URL, { name, email, password });
       alert('Signup successful!');
     } catch (error) {
       console.error('There was an error!', error);

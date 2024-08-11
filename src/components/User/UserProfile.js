@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { USER_PROFILE_API } from '../constants'; // Import your API URL from constants
 import '../Auth/Auth.css';
 
 const UserProfile = () => {
+  const [user, setUser] = useState({ name: '', role: '' });
   const navigate = useNavigate();
 
+  useEffect(() => {
+    axios.get(USER_PROFILE_API, { withCredentials: true }) // 'withCredentials' allows sending cookies with the request
+      .then(response => {
+        setUser(response.data);
+      })
+      .catch(() => {
+        navigate('/login');
+      });
+  }, [navigate]);
+
   const handleLogout = () => {
-    localStorage.removeItem('token');
     navigate('/login');
   };
 
@@ -15,10 +27,10 @@ const UserProfile = () => {
       <div className="auth-container-inner">
         <h2>User Profile</h2>
         <div className="form-group">
-          <p><strong>Name:</strong> John Doe</p> {/* Replace with dynamic data */}
+          <p><strong>Name:</strong> {user.name}</p>
         </div>
         <div className="form-group">
-          <p><strong>Role:</strong> User</p> {/* Replace with dynamic data */}
+          <p><strong>Role:</strong> {user.role}</p>
         </div>
         <button className="btn" onClick={handleLogout}>
           Logout
