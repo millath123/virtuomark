@@ -35,6 +35,7 @@ const AdminProfile = () => {
             'Authorization': `Bearer ${token}`, // Set the token in Authorization header
             'Content-Type': 'application/json',
           },
+          mode: 'no-cors',
         });
 
         if (!response.ok) {
@@ -58,6 +59,7 @@ const AdminProfile = () => {
             'Authorization': `Bearer ${token}`, // Set the token in Authorization header
             'Content-Type': 'application/json',
           },
+          mode: 'no-cors',
         });
 
         if (!response.ok) {
