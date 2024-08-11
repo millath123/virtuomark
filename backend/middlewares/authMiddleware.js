@@ -5,20 +5,21 @@ import User from '../models/User.js';
 export const protect = async (req, res, next) => {
   let token;
 
-  // Check if the token is sent in the request cookies
-  if (req.cookies.token) {
+  // Check if the token is sent in the request headers
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
-      token = req.cookies.token;
-      
+      // Extract the token from the header
+      token = req.headers.authorization.split(' ')[1];
+
       // Verify the token using the JWT secret
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      
+
       // Attach the user to the request object (without password)
       req.user = await User.findById(decoded.id).select('-password');
-      
+
       // Add role from JWT to the request object
       req.user.role = decoded.role;
-      
+
       next(); // Proceed to the next middleware
     } catch (error) {
       console.error('Token verification failed:', error);

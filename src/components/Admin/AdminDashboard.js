@@ -8,12 +8,33 @@ const AdminProfile = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
+  // Helper function to get the token from cookies
+  const getTokenFromCookies = () => {
+    const name = 'token=';
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return null;
+  };
+
   useEffect(() => {
     const fetchAdminProfile = async () => {
+      const token = getTokenFromCookies();
       try {
         const response = await fetch(ADMIN_PROFILE_API, {
           method: 'GET',
-          credentials: 'include', // Allows sending cookies with the request
+          headers: {
+            'Authorization': `Bearer ${token}`, // Set the token in Authorization header
+            'Content-Type': 'application/json',
+          },
         });
 
         if (!response.ok) {
@@ -29,10 +50,14 @@ const AdminProfile = () => {
     };
 
     const fetchUsers = async () => {
+      const token = getTokenFromCookies();
       try {
         const response = await fetch(ADMIN_USERS_API, {
           method: 'GET',
-          credentials: 'include', // Allows sending cookies with the request
+          headers: {
+            'Authorization': `Bearer ${token}`, // Set the token in Authorization header
+            'Content-Type': 'application/json',
+          },
         });
 
         if (!response.ok) {
@@ -51,12 +76,18 @@ const AdminProfile = () => {
   }, [navigate]);
 
   const handleLogout = () => {
-    // Implement logout logic if needed
+    // Clear the token from cookies
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+    
+    // Optionally, you might want to call a logout API endpoint if you have one
+    // await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+
+    // Redirect to the login page
     navigate('/login');
   };
 
   if (!user) {
-    return null; // or a loading spinner if you want
+    return <div>Loading...</div>; // Show loading message or spinner while data is being fetched
   }
 
   return (

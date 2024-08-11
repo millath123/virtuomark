@@ -18,8 +18,8 @@ export const loginUser = async (req, res) => {
 
   // Check if the login attempt is for an admin account
   if (email === process.env.ADMIN_EMAIL) {
-    const isAdminPasswordCorrect = await bcrypt.compare(password, await bcrypt.hash(process.env.ADMIN_PASSWORD, 10));
-    if (isAdminPasswordCorrect) {
+    let pas = process.env.ADMIN_PASSWORD
+    if (password == pas) {
       // Generate token with admin role and send it as a cookie
       let tokk =  generateToken('admin', 'admin')
       res.cookie('token',tokk);
