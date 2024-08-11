@@ -68,10 +68,10 @@ const UserProfile = () => {
       <div className="auth-container-inner">
         <h2>User Profile</h2>
         <div className="form-group">
-          <p><strong>Name:</strong> {user.name}</p>
+          <p><strong>Name:</strong> {user.user.name}</p>
         </div>
         <div className="form-group">
-          <p><strong>Role:</strong> {user.role}</p>
+          <p><strong>Role:</strong> {user.user.role}</p>
         </div>
         <button className="btn" onClick={handleLogout}>
           Logout
