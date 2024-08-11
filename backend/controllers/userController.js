@@ -25,7 +25,8 @@ export const loginUser = async (req, res) => {
     const isAdminPasswordCorrect = await bcrypt.compare(password, await bcrypt.hash(process.env.ADMIN_PASSWORD, 10));
     if (isAdminPasswordCorrect) {
       // Generate token with admin role and send it as a cookie
-      res.cookie('token', generateToken('admin', 'admin'), { httpOnly: true, secure: true, sameSite: 'Strict' });
+      let tokk =  generateToken('admin', 'admin')
+      res.cookie('token',tokk);
       return res.json({
         name: 'Admin',
         email: email,
@@ -41,7 +42,8 @@ export const loginUser = async (req, res) => {
 
   if (user && (await user.matchPassword(password))) {
     // Generate token with user role and send it as a cookie
-    res.cookie('token', generateToken(user._id, 'user'), { httpOnly: true, secure: true, sameSite: 'Strict' });
+    let tok = generateToken(user._id, 'user')
+    res.cookie('token', tok);
     res.json({
       _id: user._id,
       name: user.name,
