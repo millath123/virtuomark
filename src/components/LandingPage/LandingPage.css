@@ -1,51 +1,68 @@
 .landing-page {
-    text-align: center;
-    padding: 50px;
-    background-color: #f4f4f4;
-    min-height: 100vh;
-  }
-  
-  .header {
-    margin-bottom: 30px;
-  }
-  
-  .header h1 {
-    font-size: 2.5rem;
-    color: #333;
-  }
-  
-  .header p {
-    font-size: 1.2rem;
-    color: #666;
-  }
-  
-  .cta-buttons {
-    margin-top: 30px;
-  }
-  
-  .btn {
-    padding: 15px 25px;
-    text-decoration: none;
-    color: #fff;
-    border-radius: 5px;
-    font-size: 1rem;
-    margin: 0 10px;
-    display: inline-block;
-  }
-  
-  .btn-primary {
-    background-color: #007bff;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-  }
-  
-  .btn-secondary {
-    background-color: #6c757d;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #5a6268;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(135deg, #0288D1 0%, #00ACC1 100%); /* Light Blue to Cyan */
+  height: 100vh;
+  width: 100vw;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-size: 3rem;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header p {
+  font-size: 1.5rem;
+  color: #f1f1f1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-buttons {
+  margin-top: 40px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  padding: 15px 30px;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  transition: background 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00796B 0%, #009688 100%); /* Teal */
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #00695C 0%, #00897B 100%);
+  transform: translateY(-3px);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #0288D1 0%, #039BE5 100%); /* Light Blue */
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #0277BD 0%, #0288D1 100%);
+  transform: translateY(-3px);
+}

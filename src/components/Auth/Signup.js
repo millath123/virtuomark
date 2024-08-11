@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Auth.css';
+import { SIGNUP_URL } from '../../constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 
 const Signup = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('User');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/auth/signup', { email, password, role });
+      await axios.post(SIGNUP_URL, { name, email, password });
       alert('Signup successful!');
     } catch (error) {
       console.error('There was an error!', error);
@@ -19,35 +22,48 @@ const Signup = () => {
 
   return (
     <div className="auth-container">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Role:</label>
-          <select value={role} onChange={(e) => setRole(e.target.value)} required>
-            <option value="User">User</option>
-            <option value="Admin">Admin</option>
-          </select>
-        </div>
-        <button type="submit" className="btn btn-primary">Sign Up</button>
-      </form>
+      <div className="auth-container-inner">
+        <h2>Sign Up</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <div className="input-container">
+              <FontAwesomeIcon icon={faUser} className="input-icon" />
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+              <label className="floating-placeholder">Name</label>
+            </div>
+          </div>
+          <div className="form-group">
+            <div className="input-container">
+              <FontAwesomeIcon icon={faEnvelope} className="input-icon" />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <label className="floating-placeholder">Email</label>
+            </div>
+          </div>
+          <div className="form-group">
+            <div className="input-container">
+              <FontAwesomeIcon icon={faLock} className="input-icon" />
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <label className="floating-placeholder">Password</label>
+            </div>
+          </div>
+          <button type="submit" className="btn btn-primary">Sign Up</button>
+        </form>
+      </div>
     </div>
   );
 };
