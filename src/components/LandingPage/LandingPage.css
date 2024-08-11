@@ -1,0 +1,68 @@
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(135deg, #0288D1 0%, #00ACC1 100%); /* Light Blue to Cyan */
+  height: 100vh;
+  width: 100vw;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-size: 3rem;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header p {
+  font-size: 1.5rem;
+  color: #f1f1f1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-buttons {
+  margin-top: 40px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  padding: 15px 30px;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  transition: background 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00796B 0%, #009688 100%); /* Teal */
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #00695C 0%, #00897B 100%);
+  transform: translateY(-3px);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #0288D1 0%, #039BE5 100%); /* Light Blue */
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #0277BD 0%, #0288D1 100%);
+  transform: translateY(-3px);
+}
