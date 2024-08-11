@@ -21,6 +21,7 @@ const app = express();
 app.use(helmet()); // Helmet helps secure Express apps by setting various HTTP headers
 app.use(cors({
     origin: 'https://virtuomark.vercel.app',
+    credentials: true, // Allow credentials
   })); // Enable Cross-Origin Resource Sharing
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 })); // Rate limiting middleware to prevent abuse
 
