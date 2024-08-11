@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth/Auth.css';
-import { ADMIN_PROFILE_API, ADMIN_USERS_API } from '../constants'; // Import API URLs from constants
+import { ADMIN_PROFILE_API, ADMIN_USERS_API } from '../../constants'; // Import API URLs from constants
 
 const AdminProfile = () => {
   const [user, setUser] = useState(null);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { USER_PROFILE_API } from '../constants'; // Import your API URL from constants
+import { USER_PROFILE_API } from '../../constantsconstants'; // Import your API URL from constants
 import '../Auth/Auth.css';
 
 const UserProfile = () => {
