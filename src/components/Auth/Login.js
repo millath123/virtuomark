@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import '../Auth/Auth.css';
 import { LOGIN_URL } from '../../constants'; // Import the URL from constants file
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,14 +13,26 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(LOGIN_URL, { email, password });
+      const response = await fetch(LOGIN_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
       if (data.role === 'admin') {
-        navigate('/admin-profile');
+        navigate('/admin-dashboard');
       } else {
-        navigate('/user-profile');
+        navigate('/user-dashboard');
       }
     } catch (error) {
-      console.error('Login failed!', error);
+      alert('Login failed: ' + error.message); // Show error as an alert
     }
   };
 

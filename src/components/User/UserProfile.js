@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { USER_PROFILE_API } from '../constants'; // Import your API URL from constants
 import '../Auth/Auth.css';
 
@@ -9,13 +8,25 @@ const UserProfile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(USER_PROFILE_API, { withCredentials: true }) // 'withCredentials' allows sending cookies with the request
-      .then(response => {
-        setUser(response.data);
-      })
-      .catch(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch(USER_PROFILE_API, {
+          method: 'GET',
+          credentials: 'include', // Allows sending cookies with the request
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
         navigate('/login');
-      });
+      }
+    };
+
+    fetchUserProfile();
   }, [navigate]);
 
   const handleLogout = () => {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import '../Auth/Auth.css';
 import { useNavigate } from 'react-router-dom';
+import '../Auth/Auth.css';
 import { ADMIN_PROFILE_API, ADMIN_USERS_API } from '../constants'; // Import API URLs from constants
 
 const AdminProfile = () => {
@@ -12,8 +11,17 @@ const AdminProfile = () => {
   useEffect(() => {
     const fetchAdminProfile = async () => {
       try {
-        const profileResponse = await axios.get(ADMIN_PROFILE_API, { withCredentials: true });
-        setUser(profileResponse.data);
+        const response = await fetch(ADMIN_PROFILE_API, {
+          method: 'GET',
+          credentials: 'include', // Allows sending cookies with the request
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        setUser(data);
       } catch (error) {
         console.error('Failed to fetch admin profile', error);
         navigate('/login');
@@ -22,8 +30,17 @@ const AdminProfile = () => {
 
     const fetchUsers = async () => {
       try {
-        const usersResponse = await axios.get(ADMIN_USERS_API, { withCredentials: true });
-        setUsers(usersResponse.data);
+        const response = await fetch(ADMIN_USERS_API, {
+          method: 'GET',
+          credentials: 'include', // Allows sending cookies with the request
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        setUsers(data);
       } catch (error) {
         console.error('Failed to fetch users', error);
       }
@@ -34,7 +51,7 @@ const AdminProfile = () => {
   }, [navigate]);
 
   const handleLogout = () => {
-    // Implement logout logic
+    // Implement logout logic if needed
     navigate('/login');
   };
 
