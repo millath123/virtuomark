@@ -50,7 +50,7 @@ const AdminProfile = () => {
         }
 
         const data = await response.json();
-        setUser(data);
+        setUser(data.user);
       } catch (error) {
         console.error('Failed to fetch admin profile', error);
       }
@@ -80,7 +80,7 @@ const AdminProfile = () => {
         }
 
         const data = await response.json();
-        setUsers(data);
+        setUsers(data.users);
       } catch (error) {
         console.error('Failed to fetch users', error);
       }
