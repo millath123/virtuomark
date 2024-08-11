@@ -7,8 +7,8 @@ import nodemailer from 'nodemailer';
 const transporter = nodemailer.createTransport({
   service: 'Gmail', // or use 'SMTP' with specific host, port, etc.
   auth: {
-    user: process.env.EMAIL_USERNAME, // Your email address
-    pass: process.env.EMAIL_PASSWORD, // Your email password
+    user: process.env.EMAIL_USERNAME, 
+    pass: process.env.EMAIL_PASSWORD, 
   },
 });
 
