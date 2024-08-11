@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import LandingPage from './components/LandingPage';
+import LandingPage from './components/LandingPage/LandingPage';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
 import UserProfile from './components/User/UserProfile';
