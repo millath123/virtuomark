@@ -42,7 +42,7 @@ const UserProfile = () => {
         }
 
         const data = await response.json();
-        setUser(data);
+        setUser(data.user);
       } catch (error) {
         console.error('Failed to fetch user profile', error);
         navigate('/login');
@@ -68,10 +68,10 @@ const UserProfile = () => {
       <div className="auth-container-inner">
         <h2>User Profile</h2>
         <div className="form-group">
-          <p><strong>Name:</strong> {user.user.name}</p>
+          <p><strong>Name:</strong> {user.name}</p>
         </div>
         <div className="form-group">
-          <p><strong>Role:</strong> {user.user.role}</p>
+          <p><strong>Role:</strong> {user.role}</p>
         </div>
         <button className="btn" onClick={handleLogout}>
           Logout

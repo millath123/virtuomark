@@ -15,7 +15,9 @@ export const protect = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       // Attach the user to the request object (without password)
-      req.user = await User.findById(decoded.id).select('-password');
+      if ( decoded.roll != 'admin') {
+        req.user = await User.findById(decoded.id).select('-password');
+      }
 
       // Add role from JWT to the request object
       req.user.role = decoded.role;
