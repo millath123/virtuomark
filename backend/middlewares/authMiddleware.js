@@ -34,7 +34,12 @@ export const protect = async (req, res, next) => {
 
 // Middleware to restrict access to admin-only routes
 export const admin = (req, res, next) => {
-  if (req.user && req.role === 'admin') {
+  if (req.role === 'admin') {
+    req.user = {
+      name: 'admin',
+      emial: 'admin@gmail.com',
+      role: 'admin'
+    }
     next(); // Proceed if user is admin
   } else {
     res.status(403).json({ message: 'Admin access only' });
