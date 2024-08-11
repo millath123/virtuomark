@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import '../Auth/Auth.css';
-import { LOGIN_URL } from '../../constants';
+import { LOGIN_URL } from '../../constants'; // Import the URL from constants file
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post(LOGIN_URL, { email, password });
-      localStorage.setItem('token', data.token);
-      navigate('/user-profile'); // Use navigate for navigation
+      if (data.role === 'admin') {
+        navigate('/admin-profile');
+      } else {
+        navigate('/user-profile');
+      }
     } catch (error) {
-      navigate('/user-profile');
       console.error('Login failed!', error);
     }
   };
