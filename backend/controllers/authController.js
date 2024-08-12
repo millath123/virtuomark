@@ -3,6 +3,7 @@ import generateToken from '../utils/token.js';
 import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 // Setup Nodemailer transporter
