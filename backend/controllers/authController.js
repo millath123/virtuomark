@@ -9,8 +9,8 @@ dotenv.config();
 const transporter = nodemailer.createTransport({
   service: 'gmail', 
   auth: {
-    user: EMAIL_USERNAME, 
-    pass: EMAIL_PASSWORD, 
+    user: process.env.EMAIL_USERNAME, 
+    pass: process.env.EMAIL_PASSWORD, 
   },
 });
 
@@ -69,7 +69,7 @@ export const registerUser = async (req, res) => {
   if (user) {
     // Send Welcome Email
     const mailOptions = {
-      from: EMAIL_USERNAME,
+      from: process.env.EMAIL_USERNAME,
       to: email,
       subject: 'Welcome to virtuomark!',
       text: `Hello ${name}, thank you for registering with us!`,
