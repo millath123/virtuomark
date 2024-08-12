@@ -67,7 +67,7 @@ export const registerUser = async (req, res) => {
   if (user) {
     // Send Welcome Email
     const mailOptions = {
-      from: ADMIN_EMAIL,
+      from: 'jcclubotp@gmail.com',
       to: email,
       subject: 'Welcome to virtuomark!',
       text: `Hello ${name}, thank you for registering with us!`,
